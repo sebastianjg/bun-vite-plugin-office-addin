@@ -1,11 +1,25 @@
 import type { Plugin, ResolvedConfig } from "vite";
 import { loadEnv } from "vite";
-import fs from "node:fs";
-import path from "node:path";
+import { resolve, basename } from "node:path";
 
+/**
+ * Options for the officeManifest plugin.
+ */
 export interface Options {
+	/**
+	 * Path to the manifest file.
+	 * @default "manifest.xml"
+	 */
 	path?: string;
+
+	/**
+	 * Development URL to be replaced in the manifest.
+	 */
 	devUrl?: string;
+
+	/**
+	 * Production URL to replace the development URL in the manifest.
+	 */
 	prodUrl?: string;
 }
 
@@ -23,11 +37,12 @@ export default function officeManifest(options?: Options): Plugin {
 			env = loadEnv(viteConfig.mode, process.cwd(), "ADDIN");
 		},
 
-		generateBundle() {
-			const manifestPath = path.resolve(viteConfig.root, manifestFile);
+		async generateBundle() {
+			const manifestPath = resolve(viteConfig.root, manifestFile);
+			const file = Bun.file(manifestPath);
 
-			if (!fs.existsSync(manifestPath)) {
-				viteConfig.logger.warn(
+			if (!(await file.exists())) {
+				viteConfig.logger.error(
 					`The manifest.xml file does not exist at path: '${manifestPath}'`,
 				);
 				return;
@@ -36,14 +51,15 @@ export default function officeManifest(options?: Options): Plugin {
 			const devUrl = options?.devUrl || env.ADDIN_DEV_URL;
 			const prodUrl = options?.prodUrl || env.ADDIN_PROD_URL;
 
-			let content = fs.readFileSync(manifestPath, "utf-8");
+			let content = await file.text();
 			if (devUrl && devUrl !== "") {
-				content = content.replace(new RegExp(devUrl, "g"), prodUrl);
+				const escapedDevUrl = devUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+				content = content.replaceAll(escapedDevUrl, prodUrl);
 			}
 
 			this.emitFile({
 				type: "asset",
-				fileName: path.basename(manifestPath),
+				fileName: basename(manifestPath),
 				source: content,
 			});
 		},
