@@ -1,0 +1,25 @@
+{
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}

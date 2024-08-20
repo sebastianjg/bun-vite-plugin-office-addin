@@ -15,6 +15,7 @@
   },
   "scripts": {
     "build": "bun run build.mjs",
+    "lint": "bunx biome check ./src",
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
