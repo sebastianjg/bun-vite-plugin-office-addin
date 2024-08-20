@@ -1,7 +1,7 @@
 import type { Plugin, ResolvedConfig } from 'vite'
 import { loadEnv } from 'vite'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 export interface Options {
   path?: string
@@ -31,11 +31,11 @@ export default function officeManifest(options?: Options) : Plugin {
         return
       }
 
-      const devUrl = options?.devUrl || env['ADDIN_DEV_URL']
-      const prodUrl = options?.prodUrl || env['ADDIN_PROD_URL']
+      const devUrl = options?.devUrl || env.ADDIN_DEV_URL
+      const prodUrl = options?.prodUrl || env.ADDIN_PROD_URL
 
       let content = fs.readFileSync(manifestPath, 'utf-8')
-      if (devUrl && devUrl != '') {
+      if (devUrl && devUrl !== '') {
         content = content.replace(new RegExp(devUrl, "g"), prodUrl)
       }
 
