@@ -1,6 +1,9 @@
 # Created by https://gitignore.io/api/node,visualstudiocode
 # Edit at https://gitignore.io?templates=node,visualstudiocode
 
+!.cursor/
+!.github/
+
 ### Node ###
 # Logs
 logs

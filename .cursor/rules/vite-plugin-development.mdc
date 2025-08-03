@@ -1,0 +1,55 @@
+---
+globs: src/*.ts,vite.config.*
+---
+
+# Vite Plugin Development Patterns
+
+## Plugin Structure
+
+Follow the established pattern in [src/index.ts](mdc:src/index.ts):
+
+```typescript
+interface Options {
+  // Plugin configuration interface
+}
+
+export default function pluginName(options?: Options): Plugin {
+  // Plugin state variables
+  let viteConfig: ResolvedConfig;
+
+  return {
+    name: 'plugin-name',
+
+    configResolved(resolvedConfig: ResolvedConfig) {
+      // Store config and setup environment
+    },
+
+    async generateBundle() {
+      // Main plugin logic during build
+    }
+  };
+}
+```
+
+## Key Patterns
+
+- **Plugin naming**: Use descriptive names with namespace (`office-addin-bun:manifest`)
+- **Config resolution**: Store `ResolvedConfig` in `configResolved` hook
+- **Environment handling**: Use `loadEnv()` with custom prefix for environment variables
+- **File operations**: Use Bun's file API (`Bun.file()`) for better performance
+- **Asset emission**: Use `this.emitFile()` for adding files to the build output
+
+## Configuration Best Practices
+
+- Provide sensible defaults (`manifest.xml` as default path)
+- Support both plugin options and environment variables
+- Use optional chaining and nullish coalescing for robust option handling
+- Document all configuration options with JSDoc comments
+
+## Environment Variables
+
+For Office Add-in plugins, use the `ADDIN_` prefix:
+- `ADDIN_DEV_URL`: Development server URL
+- `ADDIN_PROD_URL`: Production deployment URL
+
+Load them with: `loadEnv(viteConfig.mode, process.cwd(), 'ADDIN')`

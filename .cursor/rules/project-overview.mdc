@@ -1,0 +1,37 @@
+---
+alwaysApply: true
+---
+
+# Bun Vite Plugin for Office Add-ins - Project Overview
+
+This project builds **vite-plugin-office-addin-bun**, a Vite plugin that enables Office Add-in development using Bun and Vite.
+
+## Project Architecture
+
+The main entry point is [src/index.ts](mdc:src/index.ts), which exports the `officeManifest` plugin function. This plugin:
+- Copies and processes `manifest.xml` files during Vite builds
+- Handles URL replacement for dev/prod environments
+- Supports multiple manifest files
+- Uses Bun APIs for file operations
+
+## Key Technologies
+
+- **Bun.js**: Package manager, runtime, and testing framework
+- **Vite**: Build tool and plugin ecosystem
+- **TypeScript**: Primary language with strict typing
+- **Biome**: Linting, formatting, and code quality (config in [biome.json](mdc:biome.json))
+
+## Development Workflow
+
+- Build: `bun run build` (uses [build.mjs](mdc:build.mjs) + TypeScript declarations)
+- Test: `bun test` (using Bun's built-in test runner)
+- Lint: `bun run lint` (Biome)
+- Package structure follows [package.json](mdc:package.json) export patterns
+
+## Code Style Principles
+
+- **Functional programming**: Prefer functions over classes
+- **TypeScript interfaces**: Use interfaces over types
+- **Descriptive naming**: Use auxiliary verbs (isLoading, hasError)
+- **Modular structure**: Small, focused functions with clear responsibilities
+- **Declarative patterns**: Avoid imperative code when possible

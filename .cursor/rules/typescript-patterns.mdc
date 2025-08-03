@@ -1,0 +1,50 @@
+---
+globs: *.ts,*.tsx
+---
+
+# TypeScript Development Patterns
+
+## Code Style and Structure
+
+- Write concise, technical TypeScript code with accurate examples
+- Use functional and declarative programming patterns; **avoid classes**
+- Prefer iteration and modularization over code duplication
+- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`)
+- Structure files: exported component, subcomponents, helpers, static content, types
+
+## TypeScript Usage
+
+- Use TypeScript for all code; **prefer interfaces over types**
+- Avoid enums; **use maps instead**
+- Use the `function` keyword for pure functions
+- Use declarative syntax and avoid unnecessary curly braces in conditionals
+
+```typescript
+// Good: Interface definition
+interface PluginOptions {
+  path?: string;
+  devUrl?: string;
+  prodUrl?: string;
+}
+
+// Good: Function declaration
+export default function officeManifest(options?: PluginOptions): Plugin {
+  // Implementation
+}
+
+// Good: Descriptive variable names
+const hasManifestFile = await file.exists();
+const isProduction = viteConfig.mode === 'production';
+```
+
+## Naming Conventions
+
+- **PascalCase**: TypeScript interfaces and types (`PluginOptions`, `ManifestConfig`)
+- **camelCase**: Variables, functions, and properties (`manifestPath`, `loadEnv`)
+- **SCREAMING_SNAKE_CASE**: Environment variables (`ADDIN_DEV_URL`, `ADDIN_PROD_URL`)
+
+## Error Handling
+
+- Use descriptive error messages with context
+- Leverage Vite's logger for consistent output
+- Handle async operations properly with proper error boundaries
