@@ -4,6 +4,8 @@
 
 Build your Office Add-in with blazing-fast performance. This plugin automatically copies and transforms **manifest.xml** files to your build output with intelligent runtime detection for optimal performance.
 
+> **Note**: This project is based on and extends [vite-plugin-office-addin](https://github.com/jozefizso/vite-plugin-office-addin) by [Jozef Izso](https://github.com/jozefizso), adding dual runtime support for both Bun and Node.js environments.
+
 ## ✨ Features
 
 - 🚀 **Dual Runtime Support** - Works seamlessly with both Bun and Node.js
@@ -269,6 +271,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## 🙏 Acknowledgments
+
+This project is based on [vite-plugin-office-addin](https://github.com/jozefizso/vite-plugin-office-addin) by [Jozef Izso](https://github.com/jozefizso). We extend our gratitude for the foundational work that made this Bun-enhanced version possible.
 
 ## 📝 License
 

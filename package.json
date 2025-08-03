@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-office-addin-bun",
   "version": "1.0.0",
-  "description": "Office Add-ins development using Vite with Bun and Node.js support.",
+  "description": "Office Add-ins development using Vite with Bun and Node.js support. Based on vite-plugin-office-addin by Jozef Izso.",
   "license": "MIT",
   "author": "Sebastian Jara",
   "files": [
@@ -39,7 +39,8 @@
     "bun",
     "vite",
     "vite-plugin",
-    "office-addin"
+    "office-addin",
+    "vite-plugin-office-addin"
   ],
   "private": false
 }
