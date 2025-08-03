@@ -1,9 +1,9 @@
 /**
  * Vite Plugin for Office Add-ins with Bun and Node.js support
- * 
+ *
  * Based on vite-plugin-office-addin by Jozef Izso
  * Original: https://github.com/jozefizso/vite-plugin-office-addin
- * 
+ *
  * Enhanced with dual runtime support for Bun and Node.js environments
  */
 
