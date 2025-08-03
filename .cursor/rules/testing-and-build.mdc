@@ -1,0 +1,54 @@
+---
+globs: *.test.ts,*.spec.ts,build.mjs,package.json
+---
+
+# Testing and Build Patterns
+
+## Testing with Bun
+
+- Use Bun's built-in test runner for all tests
+- Test files should end with `.test.ts` or `.spec.ts`
+- Place tests in the same directory as source files or in a dedicated `test/` directory
+
+```typescript
+// Example test structure
+import { test, expect, describe } from 'bun:test';
+import officeManifest from './index';
+
+describe('Office Manifest Plugin', () => {
+  test('should create plugin with default options', () => {
+    const plugin = officeManifest();
+    expect(plugin.name).toBe('office-addin-bun:manifest');
+  });
+});
+```
+
+## Build Configuration
+
+The build process uses [build.mjs](mdc:build.mjs) for JavaScript compilation and TypeScript for declaration files:
+
+- `bun run build`: Complete build (JavaScript + declarations)
+- `bun run build:declaration`: TypeScript declarations only
+- Output directory: `dist/` with `.js` and `.d.ts` files
+
+## Package Scripts
+
+Key scripts from [package.json](mdc:package.json):
+- `build`: Complete build process
+- `lint`: Biome linting with `biome check ./src`
+- `prepublishOnly`: Ensures build runs before publishing
+- `postbuild`: Cleanup temporary files
+
+## Development Dependencies
+
+- **@biomejs/biome**: Code formatting and linting
+- **typescript**: Type checking and declaration generation
+- **rimraf**: Cross-platform file cleanup
+- **vite**: Peer dependency for plugin development
+
+## File Patterns
+
+- Source files: `src/` directory
+- Build output: `dist/` directory (JavaScript + TypeScript declarations)
+- Test files: `*.test.ts` pattern
+- Configuration: Root-level config files (`biome.json`, `tsconfig.json`)

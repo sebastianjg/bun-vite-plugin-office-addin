@@ -1,11 +1,12 @@
 {
-  "name": "vite-plugin-office-addin",
-  "version": "2.1.0",
-  "description": "Office Add-ins development using Vite.",
+  "name": "vite-plugin-office-addin-bun",
+  "version": "1.0.0",
+  "description": "Office Add-ins development using Vite with Bun and Node.js support. Based on vite-plugin-office-addin by Jozef Izso.",
   "license": "MIT",
-  "author": "Jozef Izso",
+  "author": "Sebastian Jara",
   "files": [
-    "dist"
+    "dist/*.js",
+    "dist/*.d.ts"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,26 +15,33 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "tsc -p .",
-    "prepare": "yarn build"
+    "build": "node build.mjs",
+    "test": "bun test",
+    "lint": "ultracite lint",
+    "format": "ultracite format --unsafe",
+    "prepublishOnly": "bun run build"
   },
   "devDependencies": {
-    "@types/node": "18",
-    "typescript": "^5.3.3",
-    "vite": "^4.5.1"
+    "@biomejs/biome": "2.1.2",
+    "@types/bun": "^1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.9.2",
+    "ultracite": "5.1.2",
+    "vite": "^7.0.6"
   },
   "peerDependencies": {
-    "vite": ">=4.5.0"
+    "vite": ">=7.0.6"
   },
-  "repository": "https://github.com/jozefizso/vite-plugin-office-addin.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastianjg/bun-vite-plugin-office-addin.git"
+  },
   "keywords": [
+    "bun",
     "vite",
     "vite-plugin",
-    "office-addin"
+    "office-addin",
+    "vite-plugin-office-addin"
   ],
-  "np": {
-    "yarn": true,
-    "tests": false,
-    "message": "vite-plugin-office-addin v%s"
-  }
+  "private": false
 }

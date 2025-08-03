@@ -1,0 +1,62 @@
+---
+description: Office Add-in development patterns and manifest handling
+---
+
+# Office Add-in Development Patterns
+
+## Manifest File Handling
+
+Office Add-ins require a `manifest.xml` file that defines the add-in's metadata, permissions, and entry points. This plugin handles:
+
+### URL Replacement
+```typescript
+// Development URL replacement for production builds
+const devUrl = 'https://localhost:3000';
+const prodUrl = 'https://office-addin.contoso.com';
+
+// Plugin escapes regex special characters
+const escapedDevUrl = devUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+content = content.replaceAll(escapedDevUrl, prodUrl);
+```
+
+### Multiple Manifest Support
+```javascript
+// vite.config.js - Multiple manifests
+export default defineConfig({
+  plugins: [
+    officeAddin({ path: 'manifest.xml' }),
+    officeAddin({ path: 'manifest.staging.xml' }),
+  ]
+});
+```
+
+## Environment Configuration
+
+### Environment Variables
+- `ADDIN_DEV_URL`: Development server URL (typically `https://localhost:3000`)
+- `ADDIN_PROD_URL`: Production deployment URL
+
+### Configuration Priority
+1. Plugin options (`devUrl`, `prodUrl`)
+2. Environment variables (`ADDIN_DEV_URL`, `ADDIN_PROD_URL`)
+3. No replacement if neither is provided
+
+## File Operations
+
+- Use `Bun.file()` for efficient file reading
+- Check file existence with `await file.exists()`
+- Handle missing manifest files gracefully with logging
+- Emit processed manifest as build asset using `this.emitFile()`
+
+## Common Manifest Locations
+
+- Root: `manifest.xml` (default)
+- Custom path: `src/manifests/manifest.xml`
+- Multiple environments: `manifest.dev.xml`, `manifest.prod.xml`
+
+## Office Add-in Development Tips
+
+- Development URL must match the server hosting your add-in
+- Production URL should be HTTPS for security
+- Manifest changes require reloading the Office application
+- Test manifests thoroughly in target Office applications (Word, Excel, PowerPoint)

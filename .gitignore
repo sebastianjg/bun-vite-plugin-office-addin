@@ -1,6 +1,9 @@
 # Created by https://gitignore.io/api/node,visualstudiocode
 # Edit at https://gitignore.io?templates=node,visualstudiocode
 
+!.cursor/
+!.github/
+
 ### Node ###
 # Logs
 logs
@@ -127,7 +130,7 @@ dist
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-*.code-workspace
+#*.code-workspace
 
 # Local History for Visual Studio Code
 .history/
