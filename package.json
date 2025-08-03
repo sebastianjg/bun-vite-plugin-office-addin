@@ -16,6 +16,7 @@
   },
   "scripts": {
     "build": "node build.mjs",
+    "test": "bun test",
     "lint": "ultracite lint",
     "format": "ultracite format --unsafe",
     "prepublishOnly": "bun run build"
