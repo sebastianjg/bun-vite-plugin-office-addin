@@ -208,7 +208,7 @@ describe('officeManifest', () => {
     globalThis.Bun.file = originalBunFile;
   });
 
-  test('should log error if manifest file does not exist', async () => {
+  test('should throw error if manifest file does not exist', async () => {
     const mockedFileExists = mock(() => Promise.resolve(false));
     const originalBunFile = globalThis.Bun.file;
     globalThis.Bun.file = mock(() => ({
@@ -220,18 +220,16 @@ describe('officeManifest', () => {
 
     const context = { emitFile: mock() };
 
-    // Trigger the generateBundle hook with context
-    await callHook(
-      plugin.generateBundle,
-      context,
-      {} as NormalizedOutputOptions,
-      {} as OutputBundle,
-      false
-    );
-
-    expect(mockConfig.logger.error).toHaveBeenCalledWith(
-      expect.stringContaining('The manifest.xml file does not exist')
-    );
+    // Trigger the generateBundle hook with context and expect it to throw
+    await expect(
+      callHook(
+        plugin.generateBundle,
+        context,
+        {} as NormalizedOutputOptions,
+        {} as OutputBundle,
+        false
+      )
+    ).rejects.toThrow('The manifest.xml file does not exist');
 
     // Restore original Bun.file
     globalThis.Bun.file = originalBunFile;
@@ -291,17 +289,15 @@ describe('officeManifest', () => {
 
       const context = { emitFile: mock() };
 
-      await callHook(
-        plugin.generateBundle,
-        context,
-        {} as NormalizedOutputOptions,
-        {} as OutputBundle,
-        false
-      );
-
-      expect(mockConfig.logger.error).toHaveBeenCalledWith(
-        expect.stringContaining('The manifest.xml file does not exist')
-      );
+      await expect(
+        callHook(
+          plugin.generateBundle,
+          context,
+          {} as NormalizedOutputOptions,
+          {} as OutputBundle,
+          false
+        )
+      ).rejects.toThrow('The manifest.xml file does not exist');
 
       globalThis.Bun.file = originalBunFile;
     });
