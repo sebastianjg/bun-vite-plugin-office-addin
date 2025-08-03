@@ -17,7 +17,7 @@ Build your Office Add-in with blazing-fast performance. This plugin automaticall
 
 ## 📋 Requirements
 
-- **Bun** (latest) or **Node.js** ≥22.0.0
+- **Bun** (latest) or **Node.js** ≥18.0.0
 - **Vite** ≥7.0.6
 
 ## 🚀 Getting Started
@@ -257,7 +257,7 @@ export default defineConfig(({ mode }) => ({
 Set the environment variable to enable verbose logging:
 
 ```sh
-DEBUG=vite-plugin-office-addin-bun bun run build
+ADDIN_DEBUG=1 bun run build
 ```
 
 ## 🤝 Contributing

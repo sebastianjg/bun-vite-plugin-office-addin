@@ -1,6 +1,6 @@
 ---
 description: Ultracite Rules - AI-Ready Formatter and Linter
-globs: "**/*.{ts,tsx,js,jsx}"
+globs: ["**/*.{ts,tsx,js,jsx}"]
 alwaysApply: true
 ---
 
@@ -56,6 +56,8 @@ Ultracite enforces strict type safety, accessibility standards, and consistent c
 - Use valid ARIA state and property values.
 - Use valid values for the `autocomplete` attribute on input elements.
 - Use correct ISO language/country codes for the `lang` attribute.
+- Ensure no component introduces a keyboard trap as per WCAG 2.1.2.
+- Verify that text and background color contrast meets WCAG AA standards (4.5:1 for normal text, 3:1 for large text).
 
 ### Code Complexity and Quality
 - Don't use consecutive spaces in regular expression literals.
@@ -186,7 +188,7 @@ Ultracite enforces strict type safety, accessibility standards, and consistent c
 - Don't use `target="_blank"` without `rel="noopener"`.
 
 ### TypeScript Best Practices
-- Don't use TypeScript enums.
+- Don't use TypeScript enums (prefer string literal unions or const objects).
 - Don't export imported variables.
 - Don't add type annotations to variables, parameters, and class properties that are initialized with literal expressions.
 - Don't use TypeScript namespaces.
@@ -195,11 +197,8 @@ Ultracite enforces strict type safety, accessibility standards, and consistent c
 - Don't use user-defined types.
 - Use `as const` instead of literal types and type annotations.
 - Use either `T[]` or `Array<T>` consistently.
-- Initialize each enum member value explicitly.
 - Use `export type` for types.
 - Use `import type` for types.
-- Make sure all enum members are literal values.
-- Don't use TypeScript const enum.
 - Don't declare empty interfaces.
 - Don't let variables evolve into any type through reassignments.
 - Don't use the any type.
@@ -309,9 +308,9 @@ Ultracite enforces strict type safety, accessibility standards, and consistent c
 - Don't use disabled tests.
 
 ## Common Tasks
-- `npx ultracite init` - Initialize Ultracite in your project
-- `npx ultracite format` - Format and fix code automatically
-- `npx ultracite lint` - Check for issues without fixing
+- `bunx ultracite init` - Initialize Ultracite in your project
+- `bunx ultracite format` - Format and fix code automatically
+- `bunx ultracite lint` - Check for issues without fixing
 
 ## Example: Error Handling
 ```typescript
@@ -327,7 +326,7 @@ try {
 // ❌ Bad: Swallowing errors
 try {
   return await fetchData();
-} catch (e) {
-  console.log(e);
+} catch {
+  // Intentionally ignoring error - this hides failures!
 }
 ```

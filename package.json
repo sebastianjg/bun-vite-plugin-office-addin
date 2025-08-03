@@ -12,10 +12,10 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "bun run build.mjs",
+    "build": "node build.mjs",
     "lint": "ultracite lint",
     "format": "ultracite format --unsafe",
     "prepublishOnly": "bun run build"
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
     "@types/bun": "^1",
+    "esbuild": "^0.24.0",
     "typescript": "^5.9.2",
     "ultracite": "5.1.2",
     "vite": "^7.0.6"
@@ -40,5 +41,5 @@
     "vite-plugin",
     "office-addin"
   ],
-  "private": true
+  "private": false
 }

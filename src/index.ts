@@ -26,8 +26,9 @@ const PATH_SEPARATOR_REGEX = /[\\/]/;
 // Path operations abstraction
 async function resolvePath(...paths: string[]): Promise<string> {
   if (isBun && Bun.resolveSync) {
-    // Use Bun's path resolution
-    return Bun.resolveSync(paths.join('/'), process.cwd());
+    // Use Bun's path resolution with proper joining
+    const { join } = await import('node:path');
+    return Bun.resolveSync(join(...paths), process.cwd());
   }
   // Node.js fallback
   const { resolve } = await import('node:path');
@@ -56,12 +57,17 @@ async function fileExists(path: string): Promise<boolean> {
 }
 
 async function readFileText(path: string): Promise<string> {
-  if (isBun) {
-    return await Bun.file(path).text();
+  try {
+    if (isBun) {
+      return await Bun.file(path).text();
+    }
+    // Node.js fallback
+    const { readFile } = await import('node:fs/promises');
+    return await readFile(path, 'utf-8');
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to read file '${path}': ${message}`);
   }
-  // Node.js fallback
-  const { readFile } = await import('node:fs/promises');
-  return await readFile(path, 'utf-8');
 }
 export default function officeManifest(options?: Options): Plugin {
   const manifestFile = options?.path ?? 'manifest.xml';
@@ -81,10 +87,9 @@ export default function officeManifest(options?: Options): Plugin {
       const manifestPath = await resolvePath(viteConfig.root, manifestFile);
 
       if (!(await fileExists(manifestPath))) {
-        viteConfig.logger.error(
+        throw new Error(
           `The manifest.xml file does not exist at path: '${manifestPath}'`
         );
-        return;
       }
 
       const devUrl = options?.devUrl || env.ADDIN_DEV_URL;

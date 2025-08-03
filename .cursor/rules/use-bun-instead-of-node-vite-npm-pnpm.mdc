@@ -1,6 +1,13 @@
 ---
 description: Use Bun instead of Node.js, npm, pnpm, or vite.
-globs: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
+globs: 
+  - "*.ts"
+  - "*.tsx"
+  - "*.html"
+  - "*.css"
+  - "*.js"
+  - "*.jsx"
+  - "package.json"
 alwaysApply: false
 ---
 
@@ -12,6 +19,12 @@ Default to using Bun instead of Node.js.
 - Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
 - Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
 - Bun automatically loads .env, so don't use dotenv.
+
+## Caveats
+
+- **Module Resolution**: Bun's module resolution differs from Node.js, which can cause issues with ESM/CJS edge cases and complex dependency graphs
+- **Native Addons**: Native addon dependencies may not be compatible with Bun's runtime
+- **Environment Files**: Bun's dotenv auto-loading only supports a single .env file in the current working directory, so multi-env setups (like .env.development, .env.production) still require explicit dotenv loading
 
 ## APIs
 
