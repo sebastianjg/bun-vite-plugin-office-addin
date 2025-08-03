@@ -36,6 +36,7 @@ if (typeof Bun !== 'undefined') {
     await build({
       entryPoints: ['./src/index.ts'],
       outdir: './dist',
+      bundle: true,
       minify: true,
       platform: 'node',
       external: ['vite', 'rollup'],
